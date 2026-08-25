@@ -1,0 +1,78 @@
+<resources>
+    <string name="app_name">Serene Care</string>
+
+    <!-- Bottom navigation -->
+    <string name="nav_today">Hoy</string>
+    <string name="nav_medications">Medicamentos</string>
+    <string name="nav_add">Añadir</string>
+    <string name="nav_settings">Ajustes</string>
+
+    <!-- Login -->
+    <string name="login_welcome">Bienvenido de nuevo</string>
+    <string name="login_subtitle">Tu salud es lo primero</string>
+    <string name="login_email_label">Correo Electrónico</string>
+    <string name="login_email_placeholder">ejemplo@correo.com</string>
+    <string name="login_password_label">Contraseña</string>
+    <string name="login_forgot_password">¿Olvidé mi contraseña?</string>
+    <string name="login_submit">Iniciar Sesión</string>
+    <string name="login_divider_or">o</string>
+    <string name="login_new_user">¿Eres nuevo en Serene Care?</string>
+    <string name="login_create_account">Crear una cuenta</string>
+
+    <!-- Hoy (Today) -->
+    <string name="today_greeting">Hoy, 24 de Mayo</string>
+    <string name="today_subtitle">Sigue así, estás cuidando tu salud.</string>
+    <string name="today_progress_title">¡Buen progreso!</string>
+    <string name="today_progress_subtitle">Has tomado la mitad de tus medicamentos hoy.</string>
+    <string name="today_mark_taken">Tomar</string>
+
+    <!-- Mis Medicamentos -->
+    <string name="medications_title">Mis Tratamientos</string>
+    <string name="medications_search_placeholder">Buscar medicamentos…</string>
+    <string name="medications_active_count">%1$d Activos</string>
+    <string name="medications_empty_title">No se encontraron resultados</string>
+    <string name="medications_empty_subtitle">Intenta buscar con otro nombre o añade un nuevo medicamento a tu lista.</string>
+    <string name="medications_empty_action">Añadir Nuevo</string>
+
+    <!-- Añadir Medicamento -->
+    <string name="add_medication_top_bar_title">Añadir</string>
+    <string name="add_medication_title">Nuevo Medicamento</string>
+    <string name="add_medication_subtitle">Ingresa los detalles para tu recordatorio.</string>
+    <string name="add_medication_name_label">Nombre del medicamento</string>
+    <string name="add_medication_name_placeholder">Ej. Paracetamol</string>
+    <string name="add_medication_dosage_label">Dosis</string>
+    <string name="add_medication_dosage_placeholder">500</string>
+    <string name="add_medication_frequency_label">Frecuencia</string>
+    <string name="add_medication_frequency_8h">Cada 8 horas</string>
+    <string name="add_medication_frequency_12h">Cada 12 horas</string>
+    <string name="add_medication_frequency_daily">1 vez al día</string>
+    <string name="add_medication_frequency_custom">Otro</string>
+    <string name="add_medication_frequency_custom_title">Frecuencia Personalizada</string>
+    <string name="add_medication_frequency_custom_every">Cada</string>
+    <string name="add_medication_frequency_custom_hours">horas</string>
+    <string name="add_medication_frequency_custom_apply">Aplicar</string>
+    <string name="add_medication_duration_label">Duración del tratamiento</string>
+    <string name="add_medication_duration_start">Inicio</string>
+    <string name="add_medication_duration_days">Días</string>
+    <string name="add_medication_duration_days_placeholder">Continuo</string>
+    <string name="add_medication_save">Guardar Medicamento</string>
+
+    <!-- Ajustes -->
+    <string name="settings_title">Ajustes</string>
+    <string name="settings_subtitle">Personaliza tu experiencia de cuidado.</string>
+    <string name="settings_section_notifications">Notificaciones</string>
+    <string name="settings_custom_alerts_title">Alertas personalizadas</string>
+    <string name="settings_custom_alerts_subtitle">Recibe avisos a tu ritmo.</string>
+    <string name="settings_sound_title">Sonido de alerta</string>
+    <string name="settings_sound_subtitle">Campana suave</string>
+    <string name="settings_refill_title">Reponer medicación</string>
+    <string name="settings_refill_subtitle">Avisa antes de quedarte sin.</string>
+    <string name="settings_section_appearance">Apariencia</string>
+    <string name="settings_dark_mode_title">Modo oscuro</string>
+    <string name="settings_dark_mode_subtitle">Mejora el contraste nocturno</string>
+    <string name="settings_section_general">General</string>
+    <string name="settings_profile">Mi Perfil</string>
+    <string name="settings_help">Centro de Ayuda</string>
+    <string name="settings_version">Serene Care v2.4.1</string>
+    <string name="settings_up_to_date">Al día</string>
+</resources>
