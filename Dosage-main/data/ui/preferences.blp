@@ -1,0 +1,141 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $PrefsDialog: Adw.Dialog {
+	name: "preferences";
+	content-width: 472;
+	title: _("Preferences");
+
+	Adw.ToolbarView {
+		[top]
+		Adw.HeaderBar headerBar {}
+
+		content: Adw.Clamp {
+			Adw.PreferencesPage prefsPage {
+				Adw.PreferencesGroup {
+					Adw.SwitchRow autoStart {
+						title: _("Auto-Start at Login");
+						active: bind $_setSwitchStartStateFromKey("autostart", autoStart) as <bool>;
+						notify::active => $_handleAutostart();
+
+						[prefix]
+						Image {
+							icon-name: "dosage-auto-start-symbolic";
+						}
+					}
+
+					Adw.SwitchRow autoClear {
+						title: _("Auto-Clear History");
+						subtitle: _("Keeps a maximum of 30 days");
+						active: bind $_setSwitchStartStateFromKey("clear-old-hist", autoClear) as <bool>;
+						notify::active => $_setSwitchSettingsKey();
+
+						[prefix]
+						Image {
+							icon-name: "dosage-auto-clear-history-symbolic";
+						}
+					}
+
+					Adw.SwitchRow lowNotif {
+						title: _("Low Stock Notification");
+						subtitle: _("Send reminders when treatments are low in stock");
+						active: bind $_setSwitchStartStateFromKey("low-stock-notif", lowNotif) as <bool>;
+						notify::active => $_setSwitchSettingsKey();
+
+						[prefix]
+						Image {
+							icon-name: "dosage-notification-low-stock-symbolic";
+						}
+					}
+
+					Adw.SwitchRow notifSound {
+						title: _("Notification Sound");
+						active: bind $_setSwitchStartStateFromKey("sound", notifSound) as <bool>;
+						notify::active => $_setSwitchSettingsKey();
+
+						[prefix]
+						Image {
+							icon-name: "dosage-notification-sound-symbolic";
+						}
+					}
+
+					Adw.ExpanderRow {
+						title: _("Notification Buttons");
+						subtitle: _("Show or hide confirm/skip");
+						expanded: false;
+
+						[prefix]
+						Image {
+							icon-name: "dosage-notification-bell-symbolic";
+						}
+
+						Adw.SwitchRow confirmBtn {
+							title: _("Confirm");
+							active: bind $_setSwitchStartStateFromKey("confirm-button", confirmBtn) as <bool>;
+							notify::active => $_setSwitchSettingsKey();
+
+							[prefix]
+							Image {
+								icon-name: "med-confirmed-symbolic";
+							}
+						}
+
+						Adw.SwitchRow skipBtn {
+							title: _("Skip");
+							active: bind $_setSwitchStartStateFromKey("skip-button", skipBtn) as <bool>;
+							notify::active => $_setSwitchSettingsKey();
+
+							[prefix]
+							Image {
+								icon-name: "med-skipped-symbolic";
+							}
+						}
+					}
+				}
+
+				Adw.PreferencesGroup {
+					Adw.ComboRow exportHistFmt {
+						title: _("Export History As");
+						icon-name: "history-symbolic";
+
+						model: StringList {
+							strings [
+								"CSV",
+								"CSV (ISO)",
+								"HTML",
+								"HTML (ISO)",
+							]
+						};
+					}
+
+					Adw.ButtonRow saveHistoryBtn {
+						title: _("Save");
+						sensitive: false;
+						start-icon-name: "document-save-symbolic";
+						activated => $_saveHistory();
+					}
+				}
+
+				Adw.PreferencesGroup {
+					Adw.ComboRow exportTreatmentsFormat {
+						title: _("Export Treatments As");
+						icon-name: "treatments-symbolic";
+
+						model: StringList {
+							strings [
+								"HTML",
+							]
+						};
+					}
+
+					Adw.ButtonRow saveTreatmentsBtn {
+						title: _("Save");
+						sensitive: false;
+						start-icon-name: "document-save-symbolic";
+						activated => $_saveTreatments();
+					}
+				}
+			}
+		};
+	}
+}

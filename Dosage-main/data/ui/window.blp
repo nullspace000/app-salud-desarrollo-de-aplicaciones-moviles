@@ -1,0 +1,356 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $DosageWindow: Adw.ApplicationWindow {
+	name: 'io-github-diegopvlk-Dosage';
+	title: _("Dosage");
+
+	Adw.Breakpoint {
+		condition ('max-width: 512sp')
+
+		setters {
+			switcherBar.reveal: true;
+			headerBar.title-widget: null;
+		}
+	}
+
+	content: Adw.ToolbarView {
+		[top]
+		Adw.HeaderBar headerBar {
+			[start]
+			ToggleButton btnWhenNeeded {
+				icon-name: "show-when-needed-symbolic";
+				tooltip-text: _("Show/Hide 'As Needed'");
+				toggled => $setShowWhenNeeded();
+				visible: false;
+			}
+
+			[start]
+			ToggleButton buttonSearch {
+				icon-name: "edit-find-symbolic";
+				tooltip-text: _("Search");
+				visible: false;
+			}
+
+			[start]
+			MenuButton buttonTreatmentsSorter {
+				menu-model: menuTreatmentsSorter;
+				icon-name: 'dosage-treatments-sorting-symbolic';
+				tooltip-text: _("Sort Treatments");
+				visible: false;
+			}
+
+			[end]
+			MenuButton buttonMenu {
+				menu-model: appMenu;
+				icon-name: 'open-menu-symbolic';
+				primary: true;
+				tooltip-text: _("Main Menu");
+			}
+
+			title-widget: Adw.ViewSwitcher {
+				stack: viewStack;
+				policy: wide;
+			};
+		}
+
+		[top]
+		SearchBar searchBar {
+			SearchEntry searchEntry {
+				search-delay: 100;
+				placeholder-text: _("Search…");
+				width-request: 276;
+			}
+		}
+
+		content: Adw.ViewStack viewStack {
+			vexpand: true;
+
+			Adw.ViewStackPage todayPage {
+				name: 'today-page';
+				title: _("Today");
+				icon-name: 'today-icn-symbolic';
+
+				child: Overlay {
+					ScrolledWindow {
+						styles [
+							'scrollbar-visible',
+						]
+
+						Adw.ClampScrollable {
+							ListView todayList {
+								styles [
+									'dosage-list',
+									'scroll-to-top-hack',
+									'today',
+								]
+
+								activate => $selectTodayItems();
+								single-click-activate: true;
+								enable-rubberband: true;
+							}
+						}
+					}
+
+					[overlay]
+					Adw.StatusPage emptyToday {
+						visible: true;
+					}
+
+					[overlay]
+					Adw.Spinner spinnerToday {}
+
+					[overlay]
+					Box {
+						halign: center;
+						valign: end;
+						margin-bottom: 3;
+
+						Button unselectBtn {
+							styles [
+								'pill',
+								'secondary',
+								'floating',
+							]
+
+							clicked => $unselectTodayItems();
+							tooltip-text: _("Unselect");
+							visible: false;
+							icon-name: 'unselect-meds-symbolic';
+						}
+
+						Button entryBtn {
+							styles [
+								'pill',
+								'floating',
+							]
+
+							clicked => $addTodayOrOneTimeToHist();
+							name: '1';
+
+							child: Adw.ButtonContent entryBtnContent {
+								icon-name: 'list-add-symbolic';
+								label: _("One-Time Entry");
+							};
+						}
+
+						Button skipBtn {
+							styles [
+								'pill',
+								'secondary',
+								'floating',
+							]
+
+							clicked => $addTodayOrOneTimeToHist();
+							name: '0';
+							tooltip-text: _("Skip");
+							visible: false;
+							icon-name: 'skip-med-symbolic';
+						}
+					}
+				};
+			}
+
+			Adw.ViewStackPage historyPage {
+				name: 'history-page';
+				title: _("History");
+				icon-name: 'history-symbolic';
+
+				child: Overlay historyOverlay {
+					ScrolledWindow {
+						styles [
+							'scrollbar-visible',
+						]
+
+						Adw.ClampScrollable {
+							ListView historyList {
+								styles [
+									'dosage-list',
+									'scroll-to-top-hack',
+								]
+
+								activate => $_editHistoryItem();
+								single-click-activate: true;
+								enable-rubberband: true;
+							}
+						}
+					}
+
+					[overlay]
+					Adw.StatusPage emptyHistory {
+						icon-name: 'history-empty-symbolic';
+						visible: false;
+					}
+
+					[overlay]
+					Box {
+						halign: center;
+						valign: end;
+						margin-bottom: 3;
+
+						Button toggleHistAmountBtn {
+							halign: center;
+							valign: end;
+							clicked => $toggleHistoryAmount();
+
+							styles [
+								'pill',
+								'floating',
+							]
+						}
+
+						Button unselectHistItemsBtn {
+							styles [
+								'pill',
+								'secondary',
+								'floating',
+							]
+
+							clicked => $unselectHistItems();
+							tooltip-text: _("Unselect");
+							visible: false;
+							icon-name: 'unselect-meds-symbolic';
+						}
+
+						Button removeHistItemsBtn {
+							halign: center;
+							valign: end;
+							clicked => $removeHistItems();
+							visible: false;
+							label: _("Remove Entries");
+
+							styles [
+								'pill',
+								'floating',
+								'destructive-action',
+							]
+						}
+					}
+				};
+			}
+
+			Adw.ViewStackPage treatmentsPage {
+				name: 'treatments-page';
+				title: _("Treatments");
+				icon-name: 'treatments-symbolic';
+
+				child: Overlay {
+					ScrolledWindow {
+						styles [
+							'scrollbar-visible',
+						]
+
+						Adw.ClampScrollable {
+							vexpand: true;
+
+							ListView treatmentsList {
+								styles [
+									'dosage-list',
+								]
+
+								activate => $_presentMedDialog();
+								single-click-activate: true;
+							}
+						}
+					}
+
+					[overlay]
+					Adw.StatusPage emptyTreatments {
+						icon-name: 'treatments-symbolic';
+						title: _("No Treatments");
+						visible: false;
+					}
+
+					[overlay]
+					Box {
+						halign: center;
+						valign: end;
+
+						Button addNewMedication {
+							halign: center;
+							valign: end;
+							margin-bottom: 3;
+							clicked => $_presentMedDialog();
+
+							styles [
+								'pill',
+								'suggested-action',
+								'floating',
+							]
+
+							child: Adw.ButtonContent {
+								icon-name: 'list-add-symbolic';
+								label: _("Add");
+							};
+						}
+					}
+				};
+			}
+		};
+
+		[bottom]
+		Adw.ViewSwitcherBar switcherBar {
+			stack: viewStack;
+		}
+	};
+}
+
+menu menuTreatmentsSorter {
+	item {
+		label: _("Name Ascending");
+		action: "app.treatments-sorter";
+		target: "name-ascending";
+	}
+
+	item {
+		label: _("Remaining Stock (Lowest First)");
+		action: "app.treatments-sorter";
+		target: "amount-remaining-less";
+	}
+
+	item {
+		label: _("Remaining Stock (Highest First)");
+		action: "app.treatments-sorter";
+		target: "amount-remaining-more";
+	}
+
+	item {
+		label: _("As Needed Last");
+		action: "app.treatments-sorter";
+		target: "when-needed-last";
+	}
+
+	item {
+		label: _("Ended Last");
+		action: "app.treatments-sorter";
+		target: "ended-last";
+	}
+
+	item {
+		label: _("As Needed/Ended Last");
+		action: "app.treatments-sorter";
+		target: "when-needed-ended-last";
+	}
+}
+
+menu appMenu {
+	item {
+		label: _("Preferences");
+		action: 'app.preferences';
+	}
+
+	item {
+		label: _("Keyboard Shortcuts");
+		action: "app.shortcuts";
+	}
+
+	item {
+		label: _("About Dosage");
+		action: 'app.about';
+	}
+
+	item {
+		label: _("Quit");
+		action: 'app.quit';
+	}
+}

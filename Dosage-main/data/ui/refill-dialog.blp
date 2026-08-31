@@ -1,0 +1,77 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $RefillDialog: Adw.Dialog {
+	name: 'refill-dialog';
+	content-width: 420;
+	title: _("Refill");
+
+	Adw.ToolbarView {
+		[top]
+		Adw.HeaderBar headerBar {}
+
+		content: ScrolledWindow {
+			Adw.Clamp refillDialogClamp {
+				maximum-size: 402;
+
+				Box {
+					orientation: vertical;
+					margin-start: 10;
+					margin-end: 10;
+					margin-bottom: 16;
+					spacing: 16;
+
+					ListBox {
+						styles [
+							"boxed-list",
+						]
+
+						selection-mode: none;
+
+						Adw.SpinRow refillRow {
+							styles [
+								"property",
+							]
+
+							title: _("Inventory");
+							climb-rate: 0.2;
+							digits: 2;
+
+							adjustment: Adjustment refillInventory {
+								lower: 0;
+								upper: 99999;
+								step-increment: 1;
+							};
+						}
+					}
+
+					Box {
+						halign: center;
+						spacing: 16;
+
+						Button refillButton {
+							styles [
+								"numeric",
+								"pill",
+							]
+
+							clicked => $_refill();
+						}
+
+						Button saveButton {
+							styles [
+								"suggested-action",
+								"pill",
+							]
+
+							label: _("Save");
+							name: "save";
+							can-shrink: true;
+							clicked => $_save();
+						}
+					}
+				}
+			}
+		};
+	}
+}

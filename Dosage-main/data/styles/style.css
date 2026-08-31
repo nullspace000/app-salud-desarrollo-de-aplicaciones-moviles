@@ -1,0 +1,396 @@
+@import "./card-colors.css";
+
+* {
+  --list-border-radius: 11px;
+  --list-border: inset 0 0 0 1px
+    rgb(from var(--card-shade-color) r g b / calc(alpha * 0.6));
+  --list-shadow: 0px 2px 4px 0px rgba(0, 0, 0, 0.066), var(--list-border);
+
+  --cubic-bezier: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --background-transition: background 200ms var(--cubic-bezier);
+}
+
+.scrollbar-visible > scrollbar.vertical:dir(ltr),
+preferencespage scrolledwindow > scrollbar.vertical:dir(ltr) {
+  margin-left: -11px;
+}
+.scrollbar-visible > scrollbar.vertical:dir(rtl),
+preferencespage scrolledwindow > scrollbar.vertical:dir(rtl) {
+  margin-right: -11px;
+}
+
+statuspage .icon {
+  margin-top: -30px;
+}
+statuspage .title {
+  margin-bottom: 32px;
+}
+
+#preferences scrolledwindow viewport clamp {
+  margin-top: -24px;
+  margin-bottom: -6px;
+}
+
+#preferences preferencespage preferencesgroup:first-child,
+#preferences preferencespage preferencesgroup:nth-child(2) {
+  margin-bottom: -10px;
+}
+
+item-box {
+  min-height: 46px;
+  padding: 5px 0;
+  color: var(--card-fg-color);
+}
+item-box:dir(ltr) {
+  box-shadow:
+    var(--list-border),
+    var(--list-shadow),
+    inset 53px 0 0 -50px var(--med-color);
+  border-radius: var(--list-border-radius);
+}
+item-box:dir(rtl) {
+  box-shadow:
+    var(--list-border),
+    var(--list-shadow),
+    inset -53px 0 0 -50px var(--med-color);
+  border-radius: var(--list-border-radius);
+}
+item-box label.title:first-child {
+  margin-top: -4px;
+}
+item-box label.subtitle:last-child {
+  margin-bottom: -4px;
+}
+
+.dosage-list > row item-box {
+  background-color: var(--card-bg-color);
+  transition: var(--background-transition);
+}
+.dosage-list > row:hover item-box {
+  background-image: image(color-mix(in srgb, currentColor 3%, transparent));
+}
+.dosage-list > row:active item-box {
+  background-image: image(color-mix(in srgb, currentColor 8%, transparent));
+}
+
+.dosage-list > header {
+  padding: 2px;
+  padding-top: 14px;
+  padding-bottom: 0px;
+  min-height: 21px;
+}
+.dosage-list > header,
+.dosage-list > row {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.dosage-list > row {
+  border-radius: calc(var(--list-border-radius) + 2px);
+  background: none;
+}
+.dosage-list {
+  background-color: transparent;
+  padding-bottom: 75px;
+}
+.list-no-extra-padding-bottom {
+  padding-bottom: 20px;
+}
+row.expander row.spin:focus-within {
+  outline: 2px solid rgb(from var(--accent-color) r g b / calc(alpha * 0.5));
+  outline-offset: -2px;
+}
+
+#preferences .boxed-list,
+#one-time-dialog .boxed-list,
+#refill-dialog .boxed-list {
+  margin: 2px 0;
+}
+
+button.specific-day {
+  min-width: 40px;
+  padding-left: 1px;
+  padding-right: 1px;
+}
+.popover-scrolled > contents scrollbar.vertical > range > trough > slider {
+  min-height: 16px;
+}
+.one-time-menu popover contents:dir(ltr) {
+  padding: 6px;
+  padding-right: 0;
+}
+.one-time-menu popover contents:dir(rtl) {
+  padding: 6px;
+  padding-left: 0;
+}
+button.one-time-name {
+  font-weight: 400;
+}
+row.combo popover > contents listview row {
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+#medication-dialog row.combo .dropdown-arrow {
+  background-color: rgb(from currentColor r g b / calc(alpha * 0.1));
+  min-height: 34px;
+  padding: 0 9px;
+  border-radius: 99px;
+  transition: var(--background-transition);
+}
+#medication-dialog row.combo .dropdown-arrow:hover {
+  background-color: rgb(from currentColor r g b / calc(alpha * 0.15));
+}
+
+#med-dialog-dosage-list {
+  margin: -2px;
+  margin-bottom: -3px;
+  background-color: var(--card-bg-color);
+  border-radius: 12px;
+}
+#med-dialog-dosage-list row {
+  border-color: var(--card-shade-color);
+}
+#med-dialog-dosage-list row:first-child {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+#med-dialog-dosage-list row:last-child {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+/*
+When using ListView.scroll_to(0) the view will scroll
+to the first item instead of the first header.
+The same thing happens in today list when confirming
+so use this little hack to scroll to header instead
+*/
+listview.scroll-to-top-hack > :nth-child(1) {
+  margin-bottom: -35px;
+}
+listview.scroll-to-top-hack > :nth-child(2) {
+  margin-top: 35px;
+}
+
+time-group-selection {
+  transition: all 200ms var(--cubic-bezier);
+  min-height: 0px;
+  padding: 0 2px;
+  margin: 2px -2px 0px;
+  background-size: 0.75em;
+  background-repeat: no-repeat;
+}
+
+time-group-selection label {
+  border-bottom: 1.5px solid transparent;
+  transition: 150ms var(--cubic-bezier);
+}
+time-group-selection:hover label {
+  border-bottom: 1.5px solid currentColor;
+}
+time-group-selection:active label {
+  color: rgb(from currentColor r g b / calc(alpha * 0.55));
+}
+time-group-selection:dir(ltr) {
+  background-position: 92% 50%;
+}
+time-group-selection:dir(rtl) {
+  background-position: 6% 50%;
+}
+time-group-selection:hover:dir(ltr) {
+  padding-right: 1.25em;
+}
+time-group-selection:hover:dir(rtl) {
+  padding-left: 1.25em;
+}
+
+.t-d-row box.suffixes > spinbutton > text:dir(ltr) {
+  margin-left: -18px;
+}
+.t-d-row box.suffixes > spinbutton > text:dir(rtl) {
+  margin-right: -18px;
+}
+
+time-picker button {
+  border-radius: 99px;
+  padding: 3px;
+}
+time-picker time-spinbutton text {
+  padding: 6px 0px;
+  margin: 2px;
+}
+
+.today-amount > button {
+  min-width: 30px;
+  min-height: 30px;
+}
+.spin-box row.spin {
+  outline: none;
+}
+.spin-box > row.spin > box {
+  margin: -4px 4px;
+}
+.spin-box:dir(ltr) > row.spin > box {
+  margin-left: 10px;
+}
+.spin-box:dir(rtl) > row.spin > box {
+  margin-right: 10px;
+}
+.spin-today-amount:dir(ltr) > row.spin > box {
+  margin-left: -16px;
+}
+.spin-today-amount:dir(rtl) > row.spin > box {
+  margin-right: -16px;
+}
+
+badge-box label {
+  padding: 5px 8px;
+}
+badge-box {
+  background-color: rgb(from currentColor r g b / calc(alpha * 0.1));
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 0.902em;
+}
+badge-icon {
+  background-color: rgb(from currentColor r g b / calc(alpha * 0.1));
+  padding: 0 5px;
+}
+badge-icon:dir(ltr) {
+  border-top-right-radius: 99px;
+  border-bottom-right-radius: 99px;
+  padding-left: 4px;
+  margin-left: -4px;
+}
+badge-icon:dir(rtl) {
+  border-top-left-radius: 99px;
+  border-bottom-left-radius: 99px;
+  padding-right: 4px;
+  margin-right: -4px;
+}
+
+.badge-button {
+  border-radius: 99px;
+  font-weight: 600;
+  font-size: 0.902em;
+  padding: 1px 9px;
+}
+.badge-button label {
+  text-transform: capitalize;
+}
+.badge-button.warning:dir(ltr) {
+  padding-right: 0;
+}
+.badge-button.warning:dir(rtl) {
+  padding-left: 0;
+}
+.badge-button.warning image:dir(ltr) {
+  background-color: rgb(from currentColor r g b / calc(alpha * 0.1));
+  border-top-right-radius: 99px;
+  border-bottom-right-radius: 99px;
+  margin: -1px 0 -1px 4px;
+  padding-left: 4px;
+  padding-right: 5px;
+}
+.badge-button.warning image:dir(rtl) {
+  background-color: rgb(from currentColor r g b / calc(alpha * 0.1));
+  border-top-left-radius: 99px;
+  border-bottom-left-radius: 99px;
+  margin: -1px 4px -1px 0;
+  padding-right: 4px;
+  padding-left: 5px;
+}
+
+button.floating:not(.suggested-action) {
+  backdrop-filter: blur(6px);
+}
+button.secondary.floating {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+button.floating.secondary image {
+  min-width: 1.2em;
+}
+button.floating {
+  margin: 13px 4px;
+}
+
+#medication-dialog headerbar button,
+#edit-hist-dialog headerbar button {
+  min-width: 56px;
+}
+
+.popover-calendar contents {
+  padding: 1px;
+}
+calendar {
+  padding: 5px 4px;
+  border-color: transparent;
+  background-color: transparent;
+}
+calendar button,
+calendar .day-number {
+  border-radius: 99px;
+}
+calendar button,
+calendar .month,
+calendar .year {
+  margin-bottom: 5px;
+  margin-top: -1px;
+}
+calendar .month label,
+calendar .year,
+calendar .day-name {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+calendar .day-name {
+  opacity: 0.5;
+}
+calendar .day-number {
+  border-radius: 99px;
+  padding: 2px 0;
+  min-width: 28px;
+  min-height: 28px;
+}
+.calendar-error {
+  border-radius: 14px;
+  animation: flashCalendar 0.8s;
+}
+@keyframes flashCalendar {
+  10% {
+    background-color: rgb(
+      from var(--error-bg-color) r g b / calc(alpha * 0.33)
+    );
+  }
+}
+
+@media (prefers-color-scheme: light) {
+  /* this is not rendering correct in gnome 50 */
+  /* time-group-selection:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 16 16'%3E%3Cpath fill='%23823a5f' d='m14.983 3.5-1-1-7.469 7.516L3.1 6.539l-2 2 5.414 5.477L15.983 4.5z' style='fill:%232f2f34'/%3E%3C/svg%3E");
+  } */
+}
+@media (prefers-color-scheme: dark) {
+  /* this is not rendering correct in gnome 50 */
+  /* time-group-selection:hover {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 16 16'%3E%3Cpath fill='%23823a5f' d='m14.983 3.5-1-1-7.469 7.516L3.1 6.539l-2 2 5.414 5.477L15.983 4.5z' style='fill:%23ffffff'/%3E%3C/svg%3E");
+  } */
+  *,
+  item-box.default {
+    --list-border: 0 0 0 transparent;
+    --list-shadow: 0px 2px 3px 0px rgba(0, 0, 0, 0.22);
+  }
+  #med-dialog-dosage-list {
+    background-color: #343437;
+  }
+}
+
+@media (prefers-contrast: more) {
+  *,
+  item-box.default {
+    --list-border: inset 0 0 0 1px var(--border-color);
+  }
+  row.combo .dropdown-arrow {
+    box-shadow: inset 0 0 0 1px rgb(from currentColor r g b / calc(alpha * 0.6));
+  }
+}

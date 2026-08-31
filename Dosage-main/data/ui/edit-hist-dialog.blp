@@ -1,0 +1,128 @@
+using Gtk 4.0;
+using Adw 1;
+
+template $EditHistDialog: Adw.Dialog {
+	name: "edit-hist-dialog";
+	content-width: 394;
+	title: _("Edit Entry");
+
+	Adw.ToolbarView {
+		[top]
+		Adw.HeaderBar headerBar {
+			show-start-title-buttons: false;
+			show-end-title-buttons: false;
+			decoration-layout: "";
+
+			[start]
+			Button cancelButton {
+				label: _("Cancel");
+				name: "cancel";
+				can-shrink: true;
+				clicked => $_closeDialog();
+			}
+
+			[end]
+			Button saveButton {
+				styles [
+					"suggested-action",
+				]
+
+				label: _("Save");
+				name: "save";
+				can-shrink: true;
+				clicked => $_save();
+			}
+		}
+
+		content: ScrolledWindow {
+			styles [
+				"scrollbar-visible",
+			]
+
+			Adw.Clamp editHistDialogClamp {
+				maximum-size: 380;
+
+				Box {
+					orientation: vertical;
+					margin-start: 12;
+					margin-end: 12;
+					margin-top: 12;
+					margin-bottom: 17;
+
+					ListBox {
+						styles [
+							"boxed-list",
+						]
+
+						selection-mode: none;
+
+						Adw.SpinRow nameDoseSpinRow {
+							title: "name";
+							subtitle: "dose unit";
+							digits: 2;
+
+							adjustment: Adjustment {
+								lower: 0.25;
+								upper: 9999;
+								step-increment: 0.25;
+								value: 1;
+							};
+						}
+
+						Adw.ActionRow takenRow {
+							styles [
+								"property",
+							]
+
+							title: "confirmed/skipped at";
+							subtitle: "time";
+
+							[suffix]
+							Box {
+								spacing: 10;
+
+								MenuButton {
+									styles [
+										"circular",
+									]
+
+									valign: center;
+									tooltip-text: _("Change Time");
+									icon-name: "clock-symbolic";
+
+									popover: Popover {
+										styles [
+											"popover-scrolled",
+										]
+
+										ScrolledWindow popoverScrollTime {
+											propagate-natural-height: true;
+											propagate-natural-width: true;
+										}
+									};
+								}
+
+								Adw.ToggleGroup takenButtons {
+									valign: center;
+									notify::active => $_handleTakenRowStatus();
+
+									Adw.Toggle {
+										icon-name: "med-skipped-symbolic";
+										tooltip: _("Skipped");
+										name: 'skipped';
+									}
+
+									Adw.Toggle {
+										tooltip: _("Confirmed");
+										icon-name: "med-confirmed-symbolic";
+										name: 'confirmed';
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		};
+	}
+}

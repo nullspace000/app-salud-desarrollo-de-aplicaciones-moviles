@@ -1,0 +1,45 @@
+{
+  "id": "io.github.diegopvlk.Dosage",
+  "runtime": "org.gnome.Platform",
+  "runtime-version": "50",
+  "sdk": "org.gnome.Sdk",
+  "command": "io.github.diegopvlk.Dosage",
+  "finish-args": [
+    "--share=ipc",
+    "--socket=fallback-x11",
+    "--device=dri",
+    "--socket=wayland",
+    "--system-talk-name=org.freedesktop.login1",
+    "--socket=pulseaudio"
+  ],
+  "cleanup": [
+    "/include",
+    "/lib/pkgconfig",
+    "/share/gir-1.0"
+  ],
+  "modules": [
+    {
+      "name": "libportal",
+      "buildsystem": "meson",
+      "config-opts": ["-Ddocs=false", "-Dvapi=false"],
+      "sources": [
+        {
+          "type": "git",
+          "url": "https://github.com/flatpak/libportal",
+          "tag": "0.9.1"
+        }
+      ]
+    },
+    {
+      "name": "dosage",
+      "buildsystem": "meson",
+      "builddir": true,
+      "sources": [
+        {
+          "type": "dir",
+          "path": ".."
+        }
+      ]
+    }
+  ]
+}
